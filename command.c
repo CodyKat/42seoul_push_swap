@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control1.c                                         :+:      :+:    :+:   */
+/*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:51:18 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/15 15:13:10 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/21 04:55:57 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ void	swap(t_stack *stack)
 
 	tmp = stack->stack[(stack->front + 1) % stack->cap];
 	stack->stack[(stack->front + 1) % stack->cap] = stack->stack[stack->front];
+	 stack->stack[stack->front] = tmp;
 }
 
-void	push_to_from(t_stack *from, t_stack *to)
+void	push(t_stack *from, t_stack *to)
 {
 	to->front--;
+    if (to->rear == - 1)
+        to->rear = to->cap - 1;
 	if (to->front == -1)
 		to->front = to->cap - 1;
 	to->stack[to->front] = from->stack[from->front];
@@ -34,7 +37,7 @@ void	push_to_from(t_stack *from, t_stack *to)
 		from->front = 0;
 }
 
-void	rotate_stack(t_stack *stack)
+void	rotate(t_stack *stack)
 {
 	stack->rear++;
 	if (stack->rear == stack->cap)
@@ -45,15 +48,15 @@ void	rotate_stack(t_stack *stack)
 		stack->front = 0;
 }
 
-void	rrotate_stack(t_stack *stack)
+void	rrotate(t_stack *stack)
 {
 	stack->front--;
 	if (stack->front < 0)
-		stack->front = stack->cap;
+		stack->front = stack->cap - 1;
 	stack->stack[stack->front] = stack->stack[stack->rear];
 	stack->rear--;
 	if (stack->rear < 0)
-		stack->rear = stack->cap;
+		stack->rear = stack->cap - 1;
 }
 
 void	print_stack(t_stack *stack)

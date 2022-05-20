@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:20:14 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/11 12:31:18 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/18 03:56:55 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,20 @@ void	*ft_calloc(size_t count, size_t size)
 		return (0);
 	ft_bzero(ptr, count * size);
 	return (ptr);
+}
+
+int	*ft_realloc(int *address, int size)
+{
+	int	*new_address;
+	int	offset;
+
+	offset = 0;
+	new_address = (int *)malloc(sizeof(int) * size);
+	while (offset < size)
+	{
+		new_address[offset] = address[offset];
+		offset++;
+	}
+	free(address);
+	return (new_address);
 }
