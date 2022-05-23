@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:19:54 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/21 04:54:28 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:34:18 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	init_stack(t_stack *stack_a, t_stack *stack_b)
 {
 	stack_a->stack = (int *)malloc(sizeof(int));
 	stack_b->stack = (int *)malloc(sizeof(int));
+	stack_a->size = 0;
+	stack_b->size = 0;
 	stack_a->cap = 0;
 	stack_b->cap = 0;
 	stack_a->front = 0;
@@ -43,7 +45,7 @@ int	main(int argc, char *argv[])
 	init_stack(&stack_a, &stack_b);
 	parsing(&stack_a, &stack_b, argv + 1);
 	sort(&stack_a, &stack_b);
-	print_stack(&stack_a);
+	print_stack(&stack_b);
 	//print_stack(&stack_b);
 //	print_stack(&stack_b);
 	// 여기까지 디버깅성공

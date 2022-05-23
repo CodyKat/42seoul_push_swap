@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:06:24 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/21 04:52:41 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:30:25 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct	s_stack
 	int	front;
 	int	rear;
 	int	cap;
+	int	size;
 }	t_stack;
 
 typedef struct	s_info

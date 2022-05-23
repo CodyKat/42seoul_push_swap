@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 23:15:58 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/19 20:02:27 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:31:27 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	parsing(t_stack *stack_a, t_stack *stack_b, char **argv)
 		argv++;
 	}
 	make_linear_stack(stack_a);
-	stack_b->cap = stack_a->cap;
 	check_has_dup_empty(stack_a);
+	stack_a->size = stack_a->cap;
+	stack_b->cap = stack_a->cap;
+	stack_b->stack = (int *)malloc(sizeof(int) * stack_b->cap);
 }

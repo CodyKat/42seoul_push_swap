@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:51:18 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/21 04:55:57 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/23 16:32:31 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	swap(t_stack *stack)
 
 void	push(t_stack *from, t_stack *to)
 {
+	if (from->size == 0)
+		ft_error();
 	to->front--;
     if (to->rear == - 1)
         to->rear = to->cap - 1;
@@ -35,6 +37,8 @@ void	push(t_stack *from, t_stack *to)
 	from->front++;
 	if (from->front == from->cap)
 		from->front = 0;
+	from->size--;
+	to->size++;
 }
 
 void	rotate(t_stack *stack)
