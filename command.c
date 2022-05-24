@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:51:18 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/23 16:32:31 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/24 19:37:00 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	push(t_stack *from, t_stack *to)
 	if (from->size == 0)
 		ft_error();
 	to->front--;
-    if (to->rear == - 1)
+    if (to->rear == -1)
         to->rear = to->cap - 1;
 	if (to->front == -1)
 		to->front = to->cap - 1;
@@ -70,7 +70,7 @@ void	print_stack(t_stack *stack)
 
 	count = 0;
 	print_index = stack->front;
-	while (1)
+	while (count < stack->size)
 	{
 		printf(" %d", stack->stack[print_index]);
 		if (print_index == stack->rear)
@@ -78,6 +78,7 @@ void	print_stack(t_stack *stack)
 		print_index++;
 		if (print_index == stack->cap)
 			print_index = 0;
+		count++;
 	}
 	printf("\n");
 }

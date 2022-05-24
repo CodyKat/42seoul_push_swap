@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 23:15:58 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/23 16:31:27 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/24 11:36:31 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,17 @@ void	free_argv_string(char **table)
 	free(table);
 }
 
-void	push_stack(t_stack *stack, int old_size, char *circuit_argv_string)
+void	push_stack(t_stack *stack, char *circuit_argv_string)
 {
 	int		*new_address;
 	int		offset;
 	long	new_element;
 
 	offset = 0;
-	new_address = (int *)malloc(sizeof(int) * old_size + 1);
+	new_address = (int *)malloc(sizeof(int) * stack->cap + 1);
 	if (new_address == 0)
 		ft_error();
-	while (offset < old_size)
+	while (offset < stack->cap)
 	{
 		new_address[offset] = stack->stack[offset];
 		offset++;
@@ -106,30 +106,28 @@ void	check_has_dup_empty(t_stack *stack)
 	}
 }
 
-void	parsing(t_stack *stack_a, t_stack *stack_b, char **argv)
+void	parsing(t_info *info, char **argv)
 {
 	int		stack_size;
 	long	cur_num;
 	char	**argv_string;
 	char	**circuit_argv_string;
 
-	stack_size = 0;
 	while (*argv)
 	{
 		argv_string = ft_split(*argv, ' ');
 		circuit_argv_string = argv_string;
 		while (*circuit_argv_string)
 		{
-			push_stack(stack_a, stack_size, *circuit_argv_string);
-			stack_size++;
+			push_stack(&info->stack_a, *circuit_argv_string);
 			circuit_argv_string++;
 		}
 		free_argv_string(argv_string);
 		argv++;
 	}
-	make_linear_stack(stack_a);
-	check_has_dup_empty(stack_a);
-	stack_a->size = stack_a->cap;
-	stack_b->cap = stack_a->cap;
-	stack_b->stack = (int *)malloc(sizeof(int) * stack_b->cap);
+	make_linear_stack(&info->stack_a);
+	check_has_dup_empty(&info->stack_a);
+	info->stack_a.size = info->stack_a.cap;
+	info->stack_b.cap = info->stack_a.cap;
+	info->stack_b.stack = (int *)malloc(sizeof(int) * info->stack_b.cap);
 }

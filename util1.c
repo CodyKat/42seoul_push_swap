@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:20:14 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/18 03:56:55 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:44:47 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ long	ft_atol(char *argv)
 	if (*argv == '+')
 		while (*argv == '+')
 			argv++;
-	else
+	else if (*argv == '-')
+	{
 		while (*argv == '-')
 			argv++;
-	if (*(argv - 1) == '-')
-		sign *= -1;
+		sign = -1;
+	}
 	while (*argv != '\0')
 	{
 		if (ft_isdigit(*argv))

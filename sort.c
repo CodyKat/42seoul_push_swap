@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 04:43:34 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/23 16:33:51 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:06:44 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	partition_three(t_stack *stack_a, t_stack *stack_b)
 	pivot2 = stack_a->cap * 2 / 3;
 	while (index)
 	{
-		if (stack_a->stack[stack_a->front] < pivot1)
+		if (stack_a->stack[stack_a->front] <= pivot1)
 		{
 			push(stack_a, stack_b);
 			rotate(stack_b);
 		}
-		else if (stack_a->stack[stack_a->front] < pivot2)
+		else if (stack_a->stack[stack_a->front] <= pivot2)
 			push(stack_a, stack_b);
 		else
 			rotate(stack_a);
@@ -37,22 +37,29 @@ void	partition_three(t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
-void	sort_big_size(t_stack *stack_a, t_stack *stack_b)
+void	sort_big_size(t_info *info)
 {
-	partition_three(stack_a, stack_b);
-	while (stack_a->size != 0)
-		push(stack_a, stack_b);
+	int	pivot[2];
+
+	pivot[0] = info->stack_a.cap / 3;
+	pivot[1] = info->stack_a.cap * 2 / 3;
+	partition_three(&info->stack_a, &info->stack_b);
+	sort_part3(info, pivot[1] + 1, info->stack_a.cap, info->stack_a.cap - pivot[1] - 1);
+	sort_part1(info, pivot[0] + 1, pivot[1], pivot[1] - pivot[0]);
+	sort_part4(info, 0, pivot[0], pivot[0]);
+	while (info->stack_b.size)
+		push(&info->stack_b, &info->stack_a);
 }
 
-void	sort(t_stack *stack_a, t_stack *stack_b)
+void	sort(t_info *info)
 {
-	if (stack_a->cap == 2)
+	if (info->stack_a.cap == 2)
 	{
-		if (stack_a->stack[0] > stack_a->stack[1])
-			swap(stack_a);
+		if (info->stack_a.stack[0] > info->stack_a.stack[1])
+			swap(&info->stack_a);
 	}
-	else if (stack_a->cap == 3)
-		sort_case_three(stack_a);
+	else if (info->stack_a.cap == 3)
+		sort_case_three_part2(&info->stack_a, 3);
 	else
-		sort_big_size(stack_a, stack_b);
+		sort_big_size(info);
 }
