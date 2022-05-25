@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:06:24 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/24 16:12:59 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:23:08 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@
 # define PART_3 3
 # define PART_4 4
 # include <stdlib.h>
+# include <unistd.h>
 
 typedef struct	s_stack
 {
-	int	*stack;
-	int	front;
-	int	rear;
-	int	cap;
-	int	size;
+	int		*stack;
+	int		front;
+	int		rear;
+	int		cap;
+	int		size;
+	char	type;
 }	t_stack;
 
 typedef struct	s_info
@@ -35,6 +37,7 @@ typedef struct	s_info
 	t_stack	stack_b;
 }	t_info;
 
+int		check_is_sorted(t_stack *stack);
 long	ft_atol(char *argv);
 void	*ft_calloc(size_t count, size_t size);
 void	check_has_dup_stack(int *stack_a, int size);
@@ -50,10 +53,9 @@ void	sort_part1(t_info *info, int start, int end, int size);
 void	sort_part2(t_info *info, int start, int end, int size);
 void	sort_part3(t_info *info, int start, int end, int size);
 void	sort_part4(t_info *info, int start, int end, int size);
-void	sort_case_three_part1(t_stack *stack, int size);
-void	sort_case_three_part2(t_stack *stack, int size);
-void	sort_case_three_part3(t_stack *stack, int size);
-void	sort_case_three_part4(t_stack *stack, int size);
+void	sort_three_in_part1(t_info *info, int size);
+void	sort_three_in_part2(t_info *info, int size);
+void	sort_case_in_three(t_stack *stack, int size);
 void	back_blocks_part1(t_info *info, int *pivot, int start, int end);
 void	back_blocks_part2(t_info *info, int *pivot, int start, int end);
 void	back_blocks_part3(t_info *info, int *pivot, int start, int end);

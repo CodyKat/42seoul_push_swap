@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 21:19:54 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/24 19:48:37 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:34:13 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	init_stack(t_info *info)
 	info->stack_b.front = 0;
 	info->stack_a.rear = -1;
 	info->stack_b.rear = -1;
+	info->stack_a.type = 'A';
+	info->stack_b.type = 'B';
 }
 
 int	main(int argc, char *argv[])

@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 23:15:58 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/24 11:36:31 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/25 16:08:04 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	push_stack(t_stack *stack, char *circuit_argv_string)
 	long	new_element;
 
 	offset = 0;
-	new_address = (int *)malloc(sizeof(int) * stack->cap + 1);
+	new_address = (int *)malloc(sizeof(int) * (stack->cap + 1));
 	if (new_address == 0)
 		ft_error();
 	while (offset < stack->cap)

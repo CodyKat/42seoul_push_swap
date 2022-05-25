@@ -6,13 +6,13 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 04:43:34 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/24 17:06:44 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/25 17:50:02 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include <stdio.h>
-
+/*
 void	partition_three(t_stack *stack_a, t_stack *stack_b)
 {
 	int index;
@@ -44,22 +44,20 @@ void	sort_big_size(t_info *info)
 	pivot[0] = info->stack_a.cap / 3;
 	pivot[1] = info->stack_a.cap * 2 / 3;
 	partition_three(&info->stack_a, &info->stack_b);
-	sort_part3(info, pivot[1] + 1, info->stack_a.cap, info->stack_a.cap - pivot[1] - 1);
+	sort_part3(info, pivot[1] + 1, info->stack_a.cap, info->stack_a.cap - pivot[1]);
 	sort_part1(info, pivot[0] + 1, pivot[1], pivot[1] - pivot[0]);
 	sort_part4(info, 0, pivot[0], pivot[0]);
 	while (info->stack_b.size)
 		push(&info->stack_b, &info->stack_a);
 }
+*/
 
 void	sort(t_info *info)
 {
-	if (info->stack_a.cap == 2)
-	{
-		if (info->stack_a.stack[0] > info->stack_a.stack[1])
-			swap(&info->stack_a);
-	}
-	else if (info->stack_a.cap == 3)
-		sort_case_three_part2(&info->stack_a, 3);
+	if (check_is_sorted(&info->stack_a))
+		return ;
+	else if (info->stack_a.size <= 3)
+		sort_case_in_three(&info->stack_a, info->stack_a.size);
 	else
-		sort_big_size(info);
+		sort_part2(info, 1, info->stack_a.cap, info->stack_a.cap);
 }

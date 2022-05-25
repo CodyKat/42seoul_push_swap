@@ -6,7 +6,7 @@
 /*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 10:51:18 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/24 19:37:00 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/05/25 21:16:22 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	swap(t_stack *stack)
 
 	tmp = stack->stack[(stack->front + 1) % stack->cap];
 	stack->stack[(stack->front + 1) % stack->cap] = stack->stack[stack->front];
-	 stack->stack[stack->front] = tmp;
+	stack->stack[stack->front] = tmp;
+	if (stack->type == 'A')
+		write(1, "sa\n", 3);
+	else
+		write(1, "sb\n", 3);
 }
 
 void	push(t_stack *from, t_stack *to)
@@ -39,6 +43,10 @@ void	push(t_stack *from, t_stack *to)
 		from->front = 0;
 	from->size--;
 	to->size++;
+	if (to->type == 'A')
+		write(1, "pa\n", 3);
+	else
+		write(1, "pb\n", 3);
 }
 
 void	rotate(t_stack *stack)
@@ -50,6 +58,10 @@ void	rotate(t_stack *stack)
 	stack->front++;
 	if (stack->front == stack->cap)
 		stack->front = 0;
+	if (stack->type == 'A')
+		write(1, "ra\n", 3);
+	else
+		write(1, "rb\n", 3);
 }
 
 void	rrotate(t_stack *stack)
@@ -61,6 +73,10 @@ void	rrotate(t_stack *stack)
 	stack->rear--;
 	if (stack->rear < 0)
 		stack->rear = stack->cap - 1;
+	if (stack->type == 'A')
+		write(1, "rra\n", 4);
+	else
+		write(1, "rrb\n", 4);
 }
 
 void	print_stack(t_stack *stack)
