@@ -3,131 +3,111 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: jaemjeon <jaemjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 23:15:58 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/25 16:08:04 by jaemjeon         ###   ########.fr       */
+/*   Created: 2022/05/26 13:07:05 by jaemjeon          #+#    #+#             */
+/*   Updated: 2022/07/11 16:59:25 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdlib.h>
 #define INT_MAX 2147483647
 #define INT_MIN (-2147483648)
 
-long	ft_atol(char *argv);
-void	ft_error(void);
-char	**ft_split(const char *s, char c);
-
-void	free_argv_string(char **table)
+void	ft_error(void)
 {
-	char	**circuit;
-
-	circuit = table;
-	while (*circuit)
-	{
-		free(*circuit);
-		circuit++;
-	}
-	free(table);
+	write(2, "Error\n", 6);
+	exit(1);
 }
 
-void	push_stack(t_stack *stack, char *circuit_argv_string)
+void	updata_stack(t_info *info, int *index_stack)
 {
-	int		*new_address;
-	int		offset;
-	long	new_element;
+	t_node	*cur_node;
 
-	offset = 0;
-	new_address = (int *)malloc(sizeof(int) * (stack->cap + 1));
-	if (new_address == 0)
-		ft_error();
-	while (offset < stack->cap)
+	cur_node = info->a_front;
+	while (cur_node)
 	{
-		new_address[offset] = stack->stack[offset];
-		offset++;
+		cur_node->data = *index_stack;
+		cur_node = cur_node->next;
+		index_stack++;
 	}
-	new_element = ft_atol(circuit_argv_string);
-	if ((INT_MIN > new_element) || (new_element > INT_MAX))
-		ft_error();
-	new_address[offset] = (int)new_element;
-	stack->rear++;
-	stack->cap++;
-	free(stack->stack);
-	stack->stack = new_address;
+	free(index_stack - info->size_a);
 }
 
-void	make_linear_stack(t_stack *stack)
+void	make_linear_stack(t_info *info)
 {
-	int	*new_stack;
-	int	index;
-	int	circuit;
-	int	rank;
+	t_node	*circuit;
+	t_node	*cur_node;
+	int		*index_stack;
+	int		rank;
+	int		index;
 
-	new_stack = (int *)malloc(sizeof(int) * stack->cap);
-	if (new_stack == 0)
+	index_stack = (int *)malloc(sizeof(int) * info->size_a);
+	if (index_stack == 0)
 		ft_error();
-	index = 0;
-	while (index < stack->cap)
+	cur_node = info->a_front;
+	index = -1;
+	while (cur_node)
 	{
 		rank = 0;
-		circuit = 0;
-		while (circuit < stack->cap)
+		circuit = info->a_front;
+		while (circuit)
 		{
-			if (stack->stack[circuit] <= stack->stack[index])
+			if (circuit->data <= cur_node->data)
 				rank++;
-			circuit++;
+			circuit = circuit->next;
 		}
-		new_stack[index] = rank;
-		index++;
+		index_stack[++index] = rank;
+		cur_node = cur_node->next;
 	}
-	free(stack->stack);
-	stack->stack = new_stack;
+	updata_stack(info, index_stack);
 }
 
-void	check_has_dup_empty(t_stack *stack)
+void	check_has_dup(t_info *info)
 {
-	int	front;
-	int	rear;
+	t_node	*front;
+	t_node	*rear;
 
-	if (stack->cap == 0)
-		ft_error();
-	front = 0;
-	while (front < stack->cap - 1)
+	if (info->size_a < 2)
+		return ;
+	front = info->a_front;
+	while (front != info->a_rear)
 	{
-		rear = front + 1;;
-		while (rear < stack->cap)
+		rear = front->next;
+		while (rear)
 		{
-			if (stack->stack[front] == stack->stack[rear])
+			if (front->data == rear->data)
 				ft_error();
-			rear++;
+			rear = rear->next;
 		}
-		front++;
+		front = front->next;
 	}
 }
 
-void	parsing(t_info *info, char **argv)
+void	parsing(t_info *info, char *argv[])
 {
-	int		stack_size;
-	long	cur_num;
-	char	**argv_string;
-	char	**circuit_argv_string;
+	char	**splited_argv;
+	long	cur_data;
+	int		idx;
 
 	while (*argv)
 	{
-		argv_string = ft_split(*argv, ' ');
-		circuit_argv_string = argv_string;
-		while (*circuit_argv_string)
+		idx = 0;
+		splited_argv = ft_split(*argv, ' ');
+		while (splited_argv[idx])
 		{
-			push_stack(&info->stack_a, *circuit_argv_string);
-			circuit_argv_string++;
+			cur_data = ft_atol(splited_argv[idx]);
+			if ((cur_data < INT_MIN) || (cur_data > INT_MAX))
+				ft_error();
+			input_new_node(info, cur_data);
+			free(splited_argv[idx]);
+			idx++;
 		}
-		free_argv_string(argv_string);
 		argv++;
+		free(splited_argv);
 	}
-	make_linear_stack(&info->stack_a);
-	check_has_dup_empty(&info->stack_a);
-	info->stack_a.size = info->stack_a.cap;
-	info->stack_b.cap = info->stack_a.cap;
-	info->stack_b.stack = (int *)malloc(sizeof(int) * info->stack_b.cap);
+	if (info->size_a < 1)
+		ft_error();
+	check_has_dup(info);
+	make_linear_stack(info);
 }

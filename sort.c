@@ -3,61 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaemjeon <jaemjeon@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: jaemjeon <jaemjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/21 04:43:34 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/05/25 17:50:02 by jaemjeon         ###   ########.fr       */
+/*   Created: 2022/05/30 15:48:21 by jaemjeon          #+#    #+#             */
+/*   Updated: 2022/07/07 09:02:15 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
-/*
-void	partition_three(t_stack *stack_a, t_stack *stack_b)
-{
-	int index;
-	int	pivot1;
-	int	pivot2;
 
-	index = stack_a->cap;
-	pivot1 = stack_a->cap / 3;
-	pivot2 = stack_a->cap * 2 / 3;
-	while (index)
+void	sort_case_two_a(t_info *info)
+{
+	t_node	*top;
+	t_node	*mid;
+
+	top = info->a_front;
+	mid = top->next;
+	if (top->data > mid->data)
+		sa(info);
+}
+
+void	sort_case_three_a(t_info *info)
+{
+	int	top;
+	int	mid;
+	int	bot;
+
+	top = info->a_front->data;
+	mid = info->a_front->next->data;
+	bot = info->a_front->next->next->data;
+	if (mid > bot && bot > top)
 	{
-		if (stack_a->stack[stack_a->front] <= pivot1)
-		{
-			push(stack_a, stack_b);
-			rotate(stack_b);
-		}
-		else if (stack_a->stack[stack_a->front] <= pivot2)
-			push(stack_a, stack_b);
-		else
-			rotate(stack_a);
-		index--;
+		rra(info);
+		sa(info);
+	}
+	else if (bot > top && top > mid)
+		sa(info);
+	else if (mid > top && top > bot)
+		rra(info);
+	else if (top > bot && bot > mid)
+		ra(info);
+	else if (top > mid && mid > bot)
+	{
+		ra(info);
+		sa(info);
 	}
 }
 
-void	sort_big_size(t_info *info)
+void	sort_case_three_b(t_info *info)
 {
-	int	pivot[2];
+	int	top;
+	int	mid;
+	int	bot;
 
-	pivot[0] = info->stack_a.cap / 3;
-	pivot[1] = info->stack_a.cap * 2 / 3;
-	partition_three(&info->stack_a, &info->stack_b);
-	sort_part3(info, pivot[1] + 1, info->stack_a.cap, info->stack_a.cap - pivot[1]);
-	sort_part1(info, pivot[0] + 1, pivot[1], pivot[1] - pivot[0]);
-	sort_part4(info, 0, pivot[0], pivot[0]);
-	while (info->stack_b.size)
-		push(&info->stack_b, &info->stack_a);
+	top = info->b_front->data;
+	mid = info->b_front->next->data;
+	bot = info->b_front->next->next->data;
+	if (mid > top && top > bot)
+	{
+		rra(info);
+		sa(info);
+	}
+	else if (top > bot && bot > mid)
+		sa(info);
+	else if (mid > bot && bot > top)
+		rra(info);
+	else if (bot > top && top > mid)
+		ra(info);
+	else if (bot > mid && mid > top)
+	{
+		ra(info);
+		sa(info);
+	}
 }
-*/
 
 void	sort(t_info *info)
 {
-	if (check_is_sorted(&info->stack_a))
-		return ;
-	else if (info->stack_a.size <= 3)
-		sort_case_in_three(&info->stack_a, info->stack_a.size);
+	if (info->size_a == 2)
+		sort_case_two_a(info);
+	else if (info->size_a == 3)
+		sort_case_three_a(info);
 	else
-		sort_part2(info, 1, info->stack_a.cap, info->stack_a.cap);
+	{
+		qa(info, info->size_a);
+		clean_commands(info);
+	}
 }

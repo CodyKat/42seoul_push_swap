@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaemjeon <jaemjeon@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jaemjeon <jaemjeon@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 19:04:16 by jaemjeon          #+#    #+#             */
-/*   Updated: 2022/03/12 04:26:09 by jaemjeon         ###   ########.fr       */
+/*   Updated: 2022/07/10 16:10:25 by jaemjeon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "push_swap.h"
 
 static int	ft_cal_num_len(long c)
 {
@@ -33,7 +33,7 @@ static char	*ft_make_neg_num(long num, int num_len)
 
 	result = (char *)malloc(sizeof(char) * (num_len + 2));
 	if (result == 0)
-		return (0);
+		ft_error();
 	result[num_len + 1] = '\0';
 	while (num_len > 0)
 	{
@@ -51,7 +51,7 @@ static char	*ft_make_pos_num(long num, int num_len)
 
 	result = (char *)malloc(sizeof(char) * (num_len + 1));
 	if (result == 0)
-		return (0);
+		ft_error();
 	result[num_len] = '\0';
 	while (--num_len >= 0)
 	{
